@@ -1,6 +1,7 @@
 package runner;
 
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -10,8 +11,4 @@ import tests.KafkaTest;
 @Suite.SuiteClasses({KafkaTest.class})
 public class TestRunner {
 
-    @BeforeClass
-    public static void setup() {
-        System.out.println("Run Tests");
-    }
 }
