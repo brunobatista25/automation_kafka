@@ -1,5 +1,4 @@
-# automation_kafka
-
+# Automação com Kafka e Junit.
 
 ## Sumário
 
@@ -11,7 +10,17 @@
   - [Instalar o Kafka](#)
   - [Instalar o Zookepeer](#)
   - [Rodando o Kafka e Zookeeper](#)
-  - [Criando um Tópico via comando](#) 
+  - [Criando um Tópico via comando](#)
+  - [Listar um Tópicos via comando](#)
+  - [Deletar um Tópicos via comando](#)
+  - [Ver valores de um Tópico via comando](#)
+- [Configurando o Projeto](#)
+  - [Instalar o java](#)
+  - [Instalar o maven](#)
+  - [Instalar o pluguins Lombock](#)
+  - [Criando o tópico `topic_user`](#)
+  - [Rodando o código](#)
+- [Referências](#)
 ---
 
 ### Boas vindas ao repositório do projeto de testes automatizados de kafka.
@@ -67,8 +76,6 @@ kafka-server-start.sh config/server.properties
 ```
 kafka-server-start.bat  C:\kafka_2.12-2.3.1\config\server.properties
 ```
-
-
 
 ### lendo um topico
 
