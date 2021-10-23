@@ -12,20 +12,21 @@
 - [2. O que é o Zookeper](#2-o-que-é-o-zookeper)
 - [3. O que é um Tópico](#3-o-que-é-um-tópico)
 - [4. Configurando o Ambiente](#4-configurando-o-ambiente)
-  - [4.1 Instalar o Kafka](#)
-  - [4.2 Instalar o Zookepeer](#)
-  - [4.3 Aqui fica sua preferência como executar o kafka e zookeper local ou via docker](#)
-     - [4.3.1 Rodando o Kafka e Zookeeper local via terminal](#)
-        - [4.3.1.1 Criando um Tópico via comando](#)
-        - [4.3.1.2 Listando Tópicos via comando](#)
-        - [4.3.1.3 Produzindo mensagem para um Tópico via comando](#)
-        - [4.3.1.4 Consumindo um Tópico via comando](#)
-     - [4.3.2 Rodando o Kafka e Zookeeper via docker-compose](#)
-         - [4.3.2.1 Criando um Tópico via docker-compose](#)
-         - [4.3.2.2 Listando Tópicos via docker-compose](#)
-         - [4.3.2.4 Consumindo um Tópico via docker-compose](#)
-- [5. Configurando o projeto de automação](#)
-- [6. Referências](#)
+  - [4.1 Instalar o Kafka](#41-instalar-o-kafka)
+  - [4.2 Instalar o Zookepeer](#42-instalar-o-zookepeer)
+  - [4.3 Aqui fica sua preferência como executar o kafka e zookeper local ou via docker](#43-aqui-fica-sua-preferência-como-executar-o-kafka-e-zookeper-local-ou-via-docker)
+     - [4.3.1 Rodando o Kafka e Zookeeper local via terminal](#431-rodando-o-kafka-e-zookeeper-local-via-terminal)
+        - [4.3.1.1 Criando um Tópico via comando](#4311-criando-um-tópico-via-comando)
+        - [4.3.1.2 Listando Tópicos via comando](#4312-listando-tópicos-via-comando)
+        - [4.3.1.3 Produzindo mensagem para um Tópico via comando](#4313-produzindo-mensagem-para-um-tópico-via-comando)
+        - [4.3.1.4 Consumindo um Tópico via comando](#4314-consumindo-um-tópico-via-comando)
+     - [4.3.2 Rodando o Kafka e Zookeeper via docker-compose](#432-rodando-o-kafka-e-zookeeper-via-docker-compose)
+         - [4.3.2.1 Criando um Tópico via docker-compose](#4321-criando-um-tópico-via-comando-docker-compose)
+         - [4.3.2.2 Listando Tópicos via docker-compose](#4323-listando-tópicos-via-docker-compose)
+         - [4.3.2.4 Consumindo um Tópico via docker-compose](#4323-consumindo-um-tópico-via-docker-compose)
+- [5. Configurando o projeto de automação](#5-configurando-o-projeto-de-automação)
+  - [5.1. Rodando kafka e zookeeper no docker](#)
+- [6. Referências](#6-referências)
 ---
 
 ### Boas vindas ao repositório do projeto de testes automatizados de kafka.
@@ -293,9 +294,10 @@ docker-compose exec kafka kafka-console-consumer --bootstrap-server localhost:29
 
 ### 5. Configurando o projeto de automação
 
+Para o nosso projeto de automação vamos usar o docker-compose para subir o kafka e o zookeeper para ficar mais facil 
+para nossa automação.
 
-### RASCUNHO
-### 4.2. Rodando kafka e zookeeper no docker:
+### 5.1. Rodando kafka e zookeeper no docker:
 
 - No projeto tem um arquivo chamado `docker-compose.yml` que já vai subir uma imagem do kafka e do zookeeper, onde o kafka vai estar na porta `9092` e o zookeeper vai estar na porta `2181`.
 - Basta executar o comando no terminal:
@@ -303,6 +305,7 @@ docker-compose exec kafka kafka-console-consumer --bootstrap-server localhost:29
 ```
 docker-compose up
 ```
+
 - Isso ira subir a imagem
 - Caso queira derrubar o docker basta executar o comando:
 
@@ -319,19 +322,17 @@ OBS: PODE ACONTECER DE SEU WINDOWS NAO CONTER O WSL2 ENTÃO É PRECISO INSTALAR 
 wsl --set-default-version 2
 ```
 
-subir um topico dentro do docker basta executar esse comando
+Para subir um tópico dentro do docker basta executar esse comando
 
 
-o docker ja cria um topico caso queira criar outro basta executar esse passando o nome do topico
 ```
-docker-compose exec kafka  kafka-topics --create --if-not-exists --zookeeper zookeeper:2181
+docker-compose exec kafka kafka-topics --create --if-not-exists --zookeeper zookeeper:2181
  --partitions 1 --replication-factor 1 --topic topic_user 
 ```
 
-### lendo um topico
+**OBS:** o docker já cria um tópico chamado `topic_user` caso queira criar outro basta executar esse comando acima
 
-$ bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
-
+#### COMECAR AQUI AMANHA
 
 pra gente trabalhar com producer e consumer é preciso ter o:
 <dependency>
@@ -339,15 +340,6 @@ pra gente trabalhar com producer e consumer é preciso ter o:
 <artifactId>kafka-clients</artifactId>
 <version>3.0.0</version>
 </dependency>
-
-## kafka documentation
-https://kafka.apache.org/21/documentation.html
-
-## doc consumer config
-https://kafka.apache.org/21/documentation.html#consumerconfigs
-
-## producer config
-
 
 ### projeto
 
@@ -366,6 +358,10 @@ https://www.confluent.io/
 
 https://kafka.apache.org/intro
 
+https://kafka.apache.org/21/documentation.html
+
+https://kafka.apache.org/21/documentation.html#consumerconfigs
+
 ### Zookeeper
 
 https://zookeeper.apache.org/
@@ -375,4 +371,3 @@ https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index
 ### Docker
 
 https://docs.docker.com/get-docker/
-
