@@ -9,26 +9,23 @@
   - [1.2 Para que posso usar o streaming de eventos?](#12-para-que-posso-usar-o-streaming-de-eventos)
   - [1.3 Apache Kafka® é uma plataforma de streaming de eventos. O que isso significa?](#13-apache-kafka-é-uma-plataforma-de-streaming-de-eventos-o-que-isso-significa)
   - [1.4 Como funciona o kafka ](#14-como-funciona-o-kafka)
-- [2. O que é o Zookeper](#)
-- [3. O que é um Tópico](#)
-- [4. Configurando o Ambiente](#)
+- [2. O que é o Zookeper](#2-o-que-é-o-zookeper)
+- [3. O que é um Tópico](#3-o-que-é-um-tópico)
+- [4. Configurando o Ambiente](#4-configurando-o-ambiente)
   - [4.1 Instalar o Kafka](#)
-     - [4.1.1 Instalar o Kafka Linux/Mac](#)
-     - [4.1.2 Instalar o Kafka windows](#) 
   - [4.2 Instalar o Zookepeer](#)
-    - [4.2.1 Instalar o Zookepeer Linux/Mac](#)
-    - [4.2.2 Instalar o Zookepeer Windows](#)
   - [4.3 Aqui fica sua preferência como executar o kafka e zookeper local ou via docker](#)
      - [4.3.1 Rodando o Kafka e Zookeeper local via terminal](#)
         - [4.3.1.1 Criando um Tópico via comando](#)
-        - [4.3.1.2 Lendo um Tópico via comando](#)
-        - [4.3.1.3 Deletando um Tópico via comando](#)
+        - [4.3.1.2 Listando Tópicos via comando](#)
+        - [4.3.1.3 Produzindo mensagem para um Tópico via comando](#)
+        - [4.3.1.4 Consumindo um Tópico via comando](#)
      - [4.3.2 Rodando o Kafka e Zookeeper via docker-compose](#)
-       - [4.3.2.1 Criando um Tópico via comando docker-compose](#)
-       - [4.3.2.2 Lendo um Tópico via comando docker-compose](#)
-       - [4.3.2.3 Deletando um Tópico via comando docker-compose](#)
-  - [4.4 Configurando o projeto de automação](#)
-  - [Referências](#)
+         - [4.3.2.1 Criando um Tópico via docker-compose](#)
+         - [4.3.2.2 Listando Tópicos via docker-compose](#)
+         - [4.3.2.4 Consumindo um Tópico via docker-compose](#)
+- [5. Configurando o projeto de automação](#)
+- [6. Referências](#)
 ---
 
 ### Boas vindas ao repositório do projeto de testes automatizados de kafka.
@@ -56,7 +53,7 @@ estejam no lugar certo, na hora certa.
 
 O streaming de eventos é aplicado a uma ampla variedade de casos de uso em uma infinidade de setores e organizações. 
 
- ####Seus muitos exemplos incluem:
+ #### Seus muitos exemplos incluem:
 
 - Para processar pagamentos e transações financeiras em tempo real, como em bolsas de valores, bancos e seguros.
 - Para rastrear e monitorar carros, caminhões, frotas e remessas em tempo real, como na logística e na indústria automotiva.
@@ -143,34 +140,66 @@ caso algo dê errado, você deseja fazer manutenção nos corretores e assim por
 é um fator de replicação de 3, ou seja, sempre haverá três cópias de seus dados. Essa replicação é realizada no nível 
 das partições de tópico.
 
-### 1. Baixar o kafka
+### 4. Configurando o ambiente.
 
-### 1. Baixar o kafka
-### O que é o Zookeper?
+### 4.1 Instalar o Kafka
 
-### Configurando o ambiente.
+Link para baixar o [Kafka](https://kafka.apache.org/downloads)
 
-### 1. Baixar o kafka
+Depois disso você pode descompactar em qualquer pasta `No meu caso eu descompactei na pasta C:`
 
-- https://kafka.apache.org/downloads
+### 4.2 Instalar o Zookepeer
 
-### 2. Baixar o zookkeper
+Link para baixar o [Zookepeer](http://zookeeper.apache.org/releases.html)
 
-- http://zookeeper.apache.org/releases.html
+Depois disso você pode descompactar em qualquer pasta `No meu caso eu descompactei na pasta C:`
 
-### 3. Rodando o zookeper na sua maquina MAC/linux
+### 4.3 Aqui fica sua preferência como executar o kafka e zookeper local ou via docker
 
-- Acessar a a pasta `kafka.2.12-2.3.1/bin/`
+Aqui te dou a escolha de usar o kafka e zookeeper na sua máquina ou usando via docker-compose.
+
+### 4.3.1 Rodando o Kafka e Zookeeper local via terminal
+
+### Rodando o kafka na sua maquina MAC/linux
+
+- Acessar a pasta `seucaminho/kafka.2.12-2.3.1/bin/`
+- 
+**OBS:** fique atento com a versão que vc baixou 
+
+- Depois Executar o comando:
+```
+kafka-server-start.sh config/server.properties
+```
+
+### Rodando o kafka na sua maquina windows:
+
+- Acessar a a pasta `C://kafka.2.12-2.3.1/bin/windows`.
+
+**OBS:** fique atento com a versão que vc baixou
 
 - Executar o comando:
 
 ```
-zookeeper-server-start.sh config/server.properties
+kafka-server-start.bat  C:\kafka_2.12-2.3.1\config\server.properties
 ```
 
-### 3.1.  Rodando o zookeper na sua maquina windows
+###  Rodando o zookeper na sua maquina windows
+
+- Acessar a a pasta `seucaminho/kafka.2.12-2.3.1/bin/bin/`.
+
+**OBS:** fique atento com a versão que vc baixou
+
+- Executar o comando:
+
+```
+zookeeper-server-start.sh config\zookeeper.properties
+```
+
+###  Rodando o zookeper na sua máquina windows
 
 - Acessar a a pasta `C://kafka.2.12-2.3.1/bin/windows`.
+
+**OBS:** fique atento com a versão que vc baixou
 
 - Executar o comando:
 
@@ -178,24 +207,91 @@ zookeeper-server-start.sh config/server.properties
 zookeeper-server-start.bat  C:\kafka_2.12-2.3.1\config\zookeeper.properties
 ```
 
-### 4.  Rodando o kafka na sua maquina MAC/linux
+### 4.3.1.1 Criando um Tópico via comando
 
-- Acessar a pasta `kafka.2.12-2.3.1/bin/`
-
-- Executar o comando:
-```
-kafka-server-start.sh config/server.properties
-```
-
-### 4.1.  Rodando o kafka na sua maquina windows:
-
-- Acessar a a pasta `C://kafka.2.12-2.3.1/bin/windows`.
-
-- Executar o comando:
+### Criando um tópico no Windows
 
 ```
-kafka-server-start.bat  C:\kafka_2.12-2.3.1\config\server.properties
+kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic NOME_DO_TOPICO
 ```
+
+### Criando um tópico no Mac/linux
+
+```
+kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic NOME_DO_TOPICO
+```
+
+### 4.3.1.2 Listando Tópicos via comando
+
+### Listando um tópico no Windows
+
+```
+kafka-topics.bat --list --bootstrap-server localhost:9092
+```
+
+### Listando um tópico no Mac/linux
+
+```
+kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+
+### 4.3.1.3 Produzindo mensagem para um Tópico via comando
+
+### Produzindo uma mensagem em um tópico no Windows
+
+```
+kafka-console-producer.bat --broker-list localhost:9092 --topic NOME_DO_TOPICO
+```
+
+**OBS:** Após rodar esse comando cada texto que vc digitar no terminal e apertar enter será uma mensagem do tópico
+
+### Produzindo uma mensagem em um tópico no Mac/linux
+
+```
+kafka-console-producer.sh --broker-list localhost:9092 --topic NOME_DO_TOPICO
+```
+
+**OBS:** Após rodar esse comando cada texto que vc digitar no terminal e apertar enter será uma mensagem do tópico
+
+### 4.3.1.4 Consumindo um Tópico via comando
+
+### Consumindo um tópico no Windows
+
+```
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic NOME_DO_TOPICO --from-beginning
+```
+
+### Consumindo um tópico no Mac/linux
+
+```
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic NOME_DO_TOPICO --from-beginning
+```
+
+### 4.3.2 Rodando o Kafka e Zookeeper via docker-compose
+
+Neste passo e preciso ter o docker na máquina sugiro que siga as instruções deste link [Docker](https://docs.docker.com/get-docker/)
+
+No nosso projeto existe um arquivo `docker-compose.yml` na pasta raiz, basta acessar o terminal e rodar os comandos abaixo
+
+### 4.3.2.1 Criando um Tópico via comando docker-compose
+
+```
+docker exec kafka kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic NOME_DO_TOPICO
+```
+
+### 4.3.2.3 Listando Tópicos via docker-compose
+
+```
+docker-compose exec kafka kafka-topics --list --bootstrap-server localhost:9092
+```
+
+### 4.3.2.3 Consumindo um Tópico via docker-compose
+
+```
+docker-compose exec kafka kafka-console-consumer --bootstrap-server localhost:29092 --topic NOME_DO_TOPICO --from-beginning
+```
+
+### 5. Configurando o projeto de automação
 
 
 ### RASCUNHO
@@ -262,8 +358,7 @@ kafka
 zookeeper
 o plugin do lombok
 
-
-### Referências
+### 6. Referências
 
 ### Kafka
 
@@ -280,3 +375,4 @@ https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index
 ### Docker
 
 https://docs.docker.com/get-docker/
+
