@@ -3,35 +3,37 @@
 
 ## Sumário
 
-- [Boas vindas ao repositório do projeto de Testes automatizados com kafka](#)
-- [1. O que é o Apache Kafka?](#)
-  - [1.1 Primeira coisa vamos falar sobre streaming.](#)
-  - [1.2 Para que posso usar o streaming de eventos?](#)
-  - [1.3 Apache Kafka® é uma plataforma de streaming de eventos. O que isso significa?](#)
-  - [1.4 Como funciona o kafka ](#)
-- [O que é o Zookeper](#)
-- [O que é um Tópico](#)
-- [Configurando o Ambiente](#)
-  - [Instalar o Kafka](#)
-     - [Instalar o Kafka Linux/Mac](#)
-     - [Instalar o Kafka windows](#) 
-  - [Instalar o Zookepeer](#)
-    - [Instalar o Zookepeer Linux/Mac](#)
-    - [Instalar o Zookepeer Windows](#)
-  - [Aqui fica sua preferência como executar o kafka e zookeper local ou via docker](#)
-     - [Rodando o Kafka e Zookeeper local via terminal](#)
-        - [Criando um Tópico via comando](#)
-        - [Lendo um Tópico via comando](#)
-        - [Deletando um Tópico via comando](#)
-     - [Rodando o Kafka e Zookeeper via docker-compose](#)
-       - [Criando um Tópico via comando docker-compose](#)
-       - [Lendo um Tópico via comando docker-compose](#)
-       - [Deletando um Tópico via comando docker-compose](#)
-  - [Configurando o projeto de automação](#)
+- [Boas vindas ao repositório do projeto de Testes automatizados com kafka](#boas-vindas-ao-repositório-do-projeto-de-testes-automatizados-de-kafka)
+- [1. O que é o Apache Kafka?](#1-o-que-é-o-apache-kafka)
+  - [1.1 Primeira coisa vamos falar sobre streaming.](#11-primeira-coisa-vamos-falar-sobre-streaming)
+  - [1.2 Para que posso usar o streaming de eventos?](#12-para-que-posso-usar-o-streaming-de-eventos)
+  - [1.3 Apache Kafka® é uma plataforma de streaming de eventos. O que isso significa?](#13-apache-kafka-é-uma-plataforma-de-streaming-de-eventos-o-que-isso-significa)
+  - [1.4 Como funciona o kafka ](#14-como-funciona-o-kafka)
+- [2. O que é o Zookeper](#)
+- [3. O que é um Tópico](#)
+- [4. Configurando o Ambiente](#)
+  - [4.1 Instalar o Kafka](#)
+     - [4.1.1 Instalar o Kafka Linux/Mac](#)
+     - [4.1.2 Instalar o Kafka windows](#) 
+  - [4.2 Instalar o Zookepeer](#)
+    - [4.2.1 Instalar o Zookepeer Linux/Mac](#)
+    - [4.2.2 Instalar o Zookepeer Windows](#)
+  - [4.3 Aqui fica sua preferência como executar o kafka e zookeper local ou via docker](#)
+     - [4.3.1 Rodando o Kafka e Zookeeper local via terminal](#)
+        - [4.3.1.1 Criando um Tópico via comando](#)
+        - [4.3.1.2 Lendo um Tópico via comando](#)
+        - [4.3.1.3 Deletando um Tópico via comando](#)
+     - [4.3.2 Rodando o Kafka e Zookeeper via docker-compose](#)
+       - [4.3.2.1 Criando um Tópico via comando docker-compose](#)
+       - [4.3.2.2 Lendo um Tópico via comando docker-compose](#)
+       - [4.3.2.3 Deletando um Tópico via comando docker-compose](#)
+  - [4.4 Configurando o projeto de automação](#)
   - [Referências](#)
 ---
 
 ### Boas vindas ao repositório do projeto de testes automatizados de kafka.
+
+- Esse repositório foi criado para auxiliar a fazer testes automatizados de streaming de eventos com kafka.
 
 ### 1. O que é o Apache Kafka?
 
@@ -97,11 +99,54 @@ de máquina. O Kafka vem com alguns desses clientes incluídos, que são aumenta
 Kafka: os clientes estão disponíveis para Java e Scala, incluindo a biblioteca Kafka Streams de nível superior , 
 para Go, Python, C / C ++ e muitas outras programações linguagens, bem como APIs REST.
 
+### 2. O que é o Zookeper?
+
+ZooKeeper é um serviço centralizado para manter informações de configuração, nomenclatura, fornecer sincronização 
+distribuída e fornecer serviços de grupo. Todos esses tipos de serviços são usados de uma forma ou de outra por 
+aplicativos distribuídos. Cada vez que eles são implementados, há muito trabalho para consertar os bugs e as condições 
+de corrida que são inevitáveis. Devido à dificuldade de implementar esses tipos de serviços, os aplicativos geralmente 
+os reduzem, o que os torna frágeis na presença de mudanças e difíceis de gerenciar. Mesmo quando feito corretamente, 
+diferentes implementações desses serviços levam à complexidade do gerenciamento quando os aplicativos são implantados.
+
+Saiba mais sobre o ZooKeeper no [ZooKeeper Wiki](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index) .
+
+### 3. O que é um Tópico.
+
+Os eventos são organizados e armazenados de forma duradoura em tópicos . Muito simplificado, um tópico é semelhante a 
+uma pasta em um sistema de arquivos, e os eventos são os arquivos dessa pasta. Um exemplo de nome de tópico poderia 
+ser "pagamentos". Os tópicos no Kafka são sempre multiprodutor e multi-assinante: um tópico pode ter zero, um ou muitos
+produtores que gravam eventos nele, bem como zero, um ou muitos consumidores que assinam esses eventos. Os eventos em 
+um tópico podem ser lidos com a frequência necessária - ao contrário dos sistemas de mensagens tradicionais, os eventos 
+não são excluídos após o consumo. Em vez disso, você define por quanto tempo o Kafka deve reter seus eventos por meio de
+uma definição de configuração por tópico, após o qual os eventos antigos serão descartados. O desempenho do Kafka é 
+efetivamente constante em relação ao tamanho dos dados, portanto, armazenar dados por um longo tempo é perfeitamente 
+adequado.
+
+Os tópicos são particionados , o que significa que um tópico é espalhado por vários "depósitos" localizados em 
+diferentes corretores Kafka. Esse posicionamento distribuído de seus dados é muito importante para a escalabilidade, 
+pois permite que os aplicativos clientes leiam e gravem os dados de / para vários corretores ao mesmo tempo. 
+Quando um novo evento é publicado em um tópico, ele é, na verdade, anexado a uma das partições do tópico. 
+Eventos com a mesma chave de evento (por exemplo, um cliente ou ID de veículo) são gravados na mesma partição, 
+e Kafka garante que qualquer consumidor de uma determinada partição de tópico sempre lerá os eventos dessa partição 
+exatamente na mesma ordem em que foram gravados.
+
+![topic](./imagens/streams-and-tables-p1_p4.png)
+
+**Figura:** Este tópico de exemplo tem quatro partições P1 – P4. Dois clientes produtores diferentes estão publicando, 
+independentemente um do outro, novos eventos no tópico, gravando eventos na rede nas partições do tópico. 
+Eventos com a mesma chave (denotados por suas cores na figura) são gravados na mesma partição. Observe que ambos os 
+produtores podem gravar na mesma partição, se apropriado.
+
+Para tornar seus dados tolerantes a falhas e altamente disponíveis, todos os tópicos podem ser replicados ,
+mesmo em regiões geográficas ou datacenters, para que sempre haja vários corretores que tenham uma cópia dos dados, 
+caso algo dê errado, você deseja fazer manutenção nos corretores e assim por diante. Uma configuração de produção comum 
+é um fator de replicação de 3, ou seja, sempre haverá três cópias de seus dados. Essa replicação é realizada no nível 
+das partições de tópico.
+
 ### 1. Baixar o kafka
 
 ### 1. Baixar o kafka
 ### O que é o Zookeper?
-### O que é um Tópico.
 
 ### Configurando o ambiente.
 
@@ -229,6 +274,8 @@ https://kafka.apache.org/intro
 ### Zookeeper
 
 https://zookeeper.apache.org/
+
+https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index
 
 ### Docker
 
