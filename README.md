@@ -4,7 +4,11 @@
 ## Sumário
 
 - [Boas vindas ao repositório do projeto de Testes automatizados com kafka](#)
-- [O que é o Apache Kafka?](#)
+- [1. O que é o Apache Kafka?](#)
+  - [1.1 Primeira coisa vamos falar sobre streaming.](#)
+  - [1.2 Para que posso usar o streaming de eventos?](#)
+  - [1.3 Apache Kafka® é uma plataforma de streaming de eventos. O que isso significa?](#)
+  - [1.4 Como funciona o kafka ](#)
 - [O que é o Zookeper](#)
 - [O que é um Tópico](#)
 - [Configurando o Ambiente](#)
@@ -24,15 +28,81 @@
        - [Lendo um Tópico via comando docker-compose](#)
        - [Deletando um Tópico via comando docker-compose](#)
   - [Configurando o projeto de automação](#)
-  - 
-  - 
+  - [Referências](#)
 ---
 
 ### Boas vindas ao repositório do projeto de testes automatizados de kafka.
 
-### O que é o Apache Kafka?
+### 1. O que é o Apache Kafka?
+
+### 1.1 Primeira coisa vamos falar sobre streaming.
+
+O streaming de eventos é o equivalente digital do sistema nervoso central do corpo humano. É a base tecnológica para 
+o mundo "sempre ativo", onde as empresas são cada vez mais definidas e automatizadas por software e onde o usuário de 
+software é mais software.
+
+Tecnicamente falando, o streaming de eventos é a prática de capturar dados em tempo real de fontes de eventos como 
+bancos de dados, sensores, dispositivos móveis, serviços em nuvem e aplicativos de software na forma de fluxos de 
+eventos; armazenar esses fluxos de eventos de forma durável para recuperação posterior; manipular, processar e reagir 
+aos fluxos de eventos em tempo real e também retrospectivamente; e encaminhar os fluxos de eventos para diferentes 
+tecnologias de destino, conforme necessário. 
+
+O streaming de eventos, portanto, garante um fluxo contínuo e interpretação dos dados para que as informações certas 
+estejam no lugar certo, na hora certa.
+
+### 1.2 Para que posso usar o streaming de eventos?
+
+O streaming de eventos é aplicado a uma ampla variedade de casos de uso em uma infinidade de setores e organizações. 
+
+ ####Seus muitos exemplos incluem:
+
+- Para processar pagamentos e transações financeiras em tempo real, como em bolsas de valores, bancos e seguros.
+- Para rastrear e monitorar carros, caminhões, frotas e remessas em tempo real, como na logística e na indústria automotiva.
+- Para capturar e analisar continuamente os dados do sensor de dispositivos IoT ou outros equipamentos, como fábricas e parques eólicos.
+- Para coletar e reagir imediatamente às interações e pedidos do cliente, como no varejo, no setor de hotéis e viagens e em aplicativos móveis.
+- Para monitorar pacientes em cuidados hospitalares e prever mudanças nas condições para garantir o tratamento oportuno em emergências.
+- Conectar, armazenar e disponibilizar dados produzidos por diferentes divisões de uma empresa.
+- Para servir como base para plataformas de dados, arquiteturas orientadas a eventos e microsserviços.
+
+### 1.3 Apache Kafka® é uma plataforma de streaming de eventos. O que isso significa?
+
+O Kafka combina três recursos principais para que você possa implementar seus casos de uso para streaming de eventos de 
+ponta a ponta com uma única solução testada em batalha:
+
+  1) Para publicar (gravar) e assinar (ler) fluxos de eventos, incluindo importação / exportação contínua de seus dados de outros sistemas.
+  2) Para armazenar streams de eventos de forma durável e confiável pelo tempo que você quiser.
+  3) Para processar fluxos de eventos conforme eles ocorrem ou retrospectivamente.
+
+  E toda essa funcionalidade é fornecida de maneira distribuída, altamente escalável, elástica, tolerante a falhas e 
+  segura. O Kafka pode ser implantado em hardware máquinas virtuais e contêineres, e no local, bem como na nuvem. 
+  Você pode escolher entre o autogerenciamento de seus ambientes Kafka e o uso de serviços totalmente gerenciados 
+  oferecidos por diversos fornecedores.
+
+### 1.4 Como funciona o kafka 
+
+Kafka é um sistema distribuído que consiste em servidores e clientes que se comunicam por meio de um protocolo de rede 
+TCP de alto desempenho . Ele pode ser implantado em hardware bare-metal, máquinas virtuais e contêineres no local, 
+bem como em ambientes de nuvem.
+
+**Servidores:** O Kafka é executado como um cluster de um ou mais servidores que podem abranger vários datacenters ou 
+regiões de nuvem. Alguns desses servidores formam a camada de armazenamento, chamados de corretores. Outros servidores 
+executam o Kafka Connect para importar e exportar dados continuamente como fluxos de eventos para integrar o Kafka com 
+seus sistemas existentes, como bancos de dados relacionais, bem como outros clusters Kafka. Para permitir que você 
+implemente casos de uso de missão crítica, um cluster Kafka é altamente escalonável e tolerante a falhas: se algum de 
+seus servidores falhar, os outros servidores assumirão seu trabalho para garantir operações contínuas sem qualquer perda de dados.
+
+**Clientes:** Eles permitem que você escreva aplicativos e microsserviços distribuídos que leem, gravam e processam 
+fluxos de eventos em paralelo, em escala e de maneira tolerante a falhas, mesmo no caso de problemas de rede ou 
+de máquina. O Kafka vem com alguns desses clientes incluídos, que são aumentados por dezenas de clientes fornecidos pela comunidade 
+Kafka: os clientes estão disponíveis para Java e Scala, incluindo a biblioteca Kafka Streams de nível superior , 
+para Go, Python, C / C ++ e muitas outras programações linguagens, bem como APIs REST.
+
+### 1. Baixar o kafka
+
+### 1. Baixar o kafka
 ### O que é o Zookeper?
 ### O que é um Tópico.
+
 ### Configurando o ambiente.
 
 ### 1. Baixar o kafka
@@ -146,3 +216,20 @@ maven
 kafka
 zookeeper
 o plugin do lombok
+
+
+### Referências
+
+### Kafka
+
+https://www.confluent.io/
+
+https://kafka.apache.org/intro
+
+### Zookeeper
+
+https://zookeeper.apache.org/
+
+### Docker
+
+https://docs.docker.com/get-docker/
