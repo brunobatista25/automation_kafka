@@ -24,13 +24,13 @@
          - [4.3.2.2 Listando Tópicos via docker-compose](#4323-listando-tópicos-via-docker-compose)
          - [4.3.2.4 Consumindo um Tópico via docker-compose](#4323-consumindo-um-tópico-via-docker-compose)
 - [5. Configurando o projeto de automação](#5-configurando-o-projeto-de-automação)
-  - [5.1. Rodando kafka e zookeeper no docker](#)
-  - [5.2. Projeto de testes](#)
-    - [5.2.1 Instalando o plugin do lombok](#)
-    - [5.2.2 Instalando o projeto](#)
-    - [5.2.3 Estrutura do projeto](#)
-    - []
-- [6. Referências](#6-referências)
+  - [5.1. Rodando kafka e zookeeper no docker](#51-rodando-kafka-e-zookeeper-no-docker)
+  - [5.2. Configurando o projeto](#52-configurando-o-projeto)
+    - [5.2.1 Instalando o plugin do lombok](#521-instalando-o-plugin-do-lombok)
+    - [5.2.2 Instalando o projeto](#522-instalando-o-projeto)
+    - [5.2.3 Estrutura do projeto](#523-estrutura-do-projeto)
+- [6. Em breve falo sobre avro e projetos com avro + kafka](#)
+- [7. Referências](#7-referências)
 ---
 
 ### Boas vindas ao repositório do projeto de testes automatizados de kafka.
@@ -447,7 +447,12 @@ mvn clean test
 
 ![Rodando o teste](./imagens/sucesso.PNG)
 
-### 6. Referências
+
+### 6. Em breve falo sobre avro e projetos com avro + kafka
+
+Em Breve...
+
+### 7. Referências
 
 ### Kafka
 
