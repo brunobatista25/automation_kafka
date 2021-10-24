@@ -1,5 +1,4 @@
-# automation_kafka
-
+# Automação com kafka + Java
 
 ## Sumário
 
@@ -26,6 +25,11 @@
          - [4.3.2.4 Consumindo um Tópico via docker-compose](#4323-consumindo-um-tópico-via-docker-compose)
 - [5. Configurando o projeto de automação](#5-configurando-o-projeto-de-automação)
   - [5.1. Rodando kafka e zookeeper no docker](#)
+  - [5.2. Projeto de testes](#)
+    - [5.2.1 Instalando o plugin do lombok](#)
+    - [5.2.2 Instalando o projeto](#)
+    - [5.2.3 Estrutura do projeto](#)
+    - []
 - [6. Referências](#6-referências)
 ---
 
@@ -306,14 +310,14 @@ para nossa automação.
 docker-compose up
 ```
 
-- Isso ira subir a imagem
+- Isso irá subir a imagem com o kafka e zookeeper com um tópico chamado `topic_user`.
 - Caso queira derrubar o docker basta executar o comando:
 
 ```
 docker-compose down
 ```
 
-OBS: PODE ACONTECER DE SEU WINDOWS NAO CONTER O WSL2 ENTÃO É PRECISO INSTALAR ELE NO POWERSHELL COM O COMANDO:
+**OBS: PODE ACONTECER DE SEU WINDOWS NÃO CONTER O WSL2 ENTÃO É PRECISO INSTALAR ELE NO POWERSHELL COM O COMANDO:**
 
  - Baixar o wsl neste link [WSL2](Pacote de atualização do kernel do Linux do WSL2 para computadores x64)
  - Depois executar esse comando no powershell:
@@ -324,7 +328,6 @@ wsl --set-default-version 2
 
 Para subir um tópico dentro do docker basta executar esse comando
 
-
 ```
 docker-compose exec kafka kafka-topics --create --if-not-exists --zookeeper zookeeper:2181
  --partitions 1 --replication-factor 1 --topic topic_user 
@@ -332,23 +335,117 @@ docker-compose exec kafka kafka-topics --create --if-not-exists --zookeeper zook
 
 **OBS:** o docker já cria um tópico chamado `topic_user` caso queira criar outro basta executar esse comando acima
 
-#### COMECAR AQUI AMANHA
+Você tambem verá umas variáveis no docker-compose se quiser saber para que cada uma funcione acesse esse link da documentação:
 
-pra gente trabalhar com producer e consumer é preciso ter o:
-<dependency>
-<groupId>org.apache.kafka</groupId>
-<artifactId>kafka-clients</artifactId>
-<version>3.0.0</version>
-</dependency>
+https://docs.confluent.io/platform/current/installation/docker/config-reference.html
 
-### projeto
+**OBS: A variável `KAFKA_CREATE_TOPICS: 'topic_user'` é usada para criar o tópico ao subir a imagem, pelo fato de se 
+você não criar o tópico antes os seus testes iram falhar pelo motivo de não ter tópico, então quando você manda um 
+producer sem o tópico criado ele irá criar um baseado no seu producer, sendo assim o primeiro teste não funcionaria, então 
+fique sempre atento com essa situação.**
 
-é necessario ter 
-java 8+
-maven
-kafka
-zookeeper
-o plugin do lombok
+### 5.2. Configurando o projeto:
+
+Antes de rodar o projeto e necessário ter:
+
+ - Java 11
+ - Maven
+ - Kafka(Caso você não queira usar o docker-compose)
+ - Zookeeper(Caso você não queira usar o docker-compose)
+ - E o plugin do lombok
+
+### 5.2.1 Instalando o plugin do lombok
+
+- Configurando o lombok no eclipse:
+
+https://dicasdejava.com.br/como-configurar-o-lombok-no-eclipse/
+
+- Configurando o lombok no intellij:
+
+https://dicasdejava.com.br/como-configurar-o-lombok-no-intellij-idea/
+
+### 5.2.2 Instalando o projeto
+
+- Basta executar o comando abaixo:
+
+```
+mvn clean install
+```
+
+Isso irá baixar todas as dependências necessárias para o projeto funcionar que são:
+
+- **kafka-clients** - É usado para criar os producers e os consumers.
+- **junit** - É usado para rodar os testes automatizados.
+- **javafaker** - É usado para gerar dados aleatórios.
+- **lombok** - É um plugin usado para gerar anotações para encurtar um pouco o codificação de objetos java.
+- **hamcrest-all** - É usado para fazer asserções dos testes.
+- **jackson-dataformat-yaml** - É uma ferramenta para formatar arquivos yml.
+
+**OBS: Essas ferramentas/plugins fazem mais coisas, porém nesse nosso contexto irei utilizar com esse sentido explicado acima**
+
+
+### 5.2.3 Estrutura do projeto
+
+![Estrutura do Projeto](./imagens/estruturadoprojeto.PNG)
+
+Nosso projeto consiste em:
+
+ - kafka - onde contém as classes onde criamos os produces e consumers.
+ - runner - Suite de teste onde irá rodar todos os testes.
+ - tests - Onde contém as classes que contém os testes.
+ - user - Classe onde tem o objeto `User`.
+ - utils - Onde algumas classes com funções de ler arquivos yaml e Configurações do kafka.
+ - resources/data - Onde contém massa de dados para nossos testes.
+
+### Kafka
+
+###  1) Producer
+
+![Producer](./imagens/producer.PNG)
+
+  - 
+
+###  2) Consumer
+ 
+![Consumer](./imagens/consumer.PNG)
+
+ - 
+
+### Runner
+
+![Test Runner](./imagens/testrunner.PNG)
+
+### Tests
+
+![Tests](./imagens/tests.PNG)
+
+### User
+
+![Users](./imagens/users.PNG)
+
+### Utils
+
+### 1) DefaultProperties
+
+![Default Properties](./imagens/defaultproperties.PNG)
+
+### 2) ReadYml
+
+![Read Ymal](./imagens/readyml.PNG)
+
+### resoruces/data
+
+![Dados](./imagens/dados.PNG)
+
+### Rodando o projeto
+
+ - Basta executar o comando no terminal:
+
+```
+mvn clean test
+```
+
+![Rodando o teste](./imagens/sucesso.PNG)
 
 ### 6. Referências
 
@@ -371,3 +468,15 @@ https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index
 ### Docker
 
 https://docs.docker.com/get-docker/
+
+### Lombok
+
+https://projectlombok.org/
+
+### Java 
+
+https://www.java.com/pt-BR/
+
+### Maven
+
+https://maven.apache.org/
