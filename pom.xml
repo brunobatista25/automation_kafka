@@ -16,7 +16,6 @@
         <slf4j.version>1.7.32</slf4j.version>
         <lombok.version>1.18.10</lombok.version>
         <hamcrest.version>1.3</hamcrest.version>
-        <jackson-databind.version>2.12.5</jackson-databind.version>
         <jackson-dataformat-yaml.version>2.12.5</jackson-dataformat-yaml.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -44,13 +43,6 @@
             <version>${javafaker.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -65,21 +57,12 @@
             <version>${hamcrest.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson-databind.version}</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>${jackson-dataformat-yaml.version}</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -101,5 +84,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
