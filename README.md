@@ -29,7 +29,7 @@
     - [5.2.1 Instalando o plugin do lombok](#521-instalando-o-plugin-do-lombok)
     - [5.2.2 Instalando o projeto](#522-instalando-o-projeto)
     - [5.2.3 Estrutura do projeto](#523-estrutura-do-projeto)
-- [6. Em breve falo sobre avro e projetos com avro + kafka](#)
+- [6. Em breve falo sobre avro e projetos com avro + kafka](#6-em-breve-falo-sobre-avro-e-projetos-com-avro--kafka)
 - [7. Referências](#7-referências)
 ---
 
