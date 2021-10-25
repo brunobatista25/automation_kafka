@@ -397,45 +397,59 @@ Nosso projeto consiste em:
  - utils - Onde algumas classes com funções de ler arquivos yaml e Configurações do kafka.
  - resources/data - Onde contém massa de dados para nossos testes.
 
-### Kafka
+Então vamos falar do nosso projeto agora como ele funciona
 
-###  1) Producer
+### resoruces/data
 
-![Producer](./imagens/producer.PNG)
+![Dados](./imagens/dados.PNG)
 
-  - 
+Esse arquivo yml é o mais simples ele contem apenas as massas de dados que iremos usar no projeto
 
-###  2) Consumer
- 
-![Consumer](./imagens/consumer.PNG)
+### ReadYml
 
- - 
+![Read Ymal](./imagens/readyml.PNG)
+
+Para a gente ler o arquivo yml criei esse método que vai percorrer por todo yml e para pegar os valores basta pegar 
+usando o comando:
+
+```
+dados.getProperty("email")
+```
 
 ### Runner
 
 ![Test Runner](./imagens/testrunner.PNG)
 
+Este é o arquivo onde contem algumas configurações da suite de testes e qual classe de teste ele vai rodar no nosso caso
+acima ele vai rodar a classe KafkaTest.
+
+### Producer
+
+![Producer](./imagens/producer.PNG)
+
+  - Aqui é onde fazemos a instância do producer passando suas [propriedades](#defaultproperties) e depois enviando uma mensagem passando o nome 
+do tópico uma chave aleatoria e a mensagem que queremos enviar.
+  
+### DefaultProperties
+
+![Default Properties](./imagens/defaultproperties.PNG)
+
+Aqui é onde configuro o as propriedades de para cada um deles um especifico para o producer e outro especifico para o consumer
+
+### Consumer
+ 
+![Consumer](./imagens/consumer2.PNG)
+
+ - Aqui basicamente eu instâncio um consumer passando as [propriedades](#defaultproperties) e depois disso percorro pela
+lista gerada pelo topico e pego a mensagem e valido depois comito o evento e retorno a resposta.
+ 
 ### Tests
 
 ![Tests](./imagens/tests.PNG)
 
-### User
-
-![Users](./imagens/users.PNG)
-
-### Utils
-
-### 1) DefaultProperties
-
-![Default Properties](./imagens/defaultproperties.PNG)
-
-### 2) ReadYml
-
-![Read Ymal](./imagens/readyml.PNG)
-
-### resoruces/data
-
-![Dados](./imagens/dados.PNG)
+Aqui é onde temos nossos testes de fato onde eu leio o arquivo yml para pegar os dados depois instâncio a classe user 
+passando os parâmetros nome, email e idade depois envio uma mensagem para o tópico chamado topic_user e depois faco a 
+validação que o kafka me retorna
 
 ### Rodando o projeto
 
@@ -446,7 +460,6 @@ mvn clean test
 ```
 
 ![Rodando o teste](./imagens/sucesso.PNG)
-
 
 ### 6. Em breve falo sobre avro e projetos com avro + kafka
 
