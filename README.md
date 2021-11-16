@@ -465,6 +465,26 @@ mvn clean test
 
 Em Breve...
 
+Explicar o que é avro
+
+Passos da configuracao
+1adicionar o plugins apache avro IDL
+2adicionado a biblioteca do avro e o plugins do maven avro
+3configurei o plugins do avro para pegar o arquivo da pasta 
+4e gerar o modelo na pasta tal
+5editei o arquivo avsc(explicar masi detalhado sobre o que cada campo faz)
+6executar e mostrar o que o avro gera o arquivo com a classe baseada no avro
+7inputar valor na classe mostrar como faz
+8Fazer um producer com avro
+9fazer um consumer com avro
+10fazer um teste com avro
+
+explicar o que e o Confluent Control Center
+Mostar com configura um Confluent Control Center(uma forma visual de ver como ta a fila, msg etc)
+
+
+
+
 ### 7. Referências
 
 ### Kafka

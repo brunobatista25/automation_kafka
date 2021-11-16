@@ -1,0 +1,19 @@
+{
+   "type": "record",
+   "name": "User",
+   "namespace": "User",
+   "fields": [
+     {
+       "name": "nome",
+       "type": ["string"],
+     },
+     {
+       "name": "email",
+       "type": ["string"],
+     },
+     {
+       "name": "age",
+       "type": ["string"],
+     }
+   ]
+}

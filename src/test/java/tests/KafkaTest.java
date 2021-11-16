@@ -28,4 +28,10 @@ public class KafkaTest {
         // Consumindo uma mensagem do tópico e validando se esta correto
         assertThat(ConsumerUser.getMessageTopic("topic_user"), is("{\"nome\":bruno,\"email\":bruno@gmail.com,\"age\":1}"));
     }
+
+    @Test
+    public void enviandoMensagemParaOTopicoComSucessoComAvro(){
+        // Lendo arquivo yml
+        Properties dados = ReadYml.lerArquivoYml("dados");
+    }
 }
