@@ -1,19 +1,19 @@
 {
    "type": "record",
-   "name": "User",
-   "namespace": "User",
+   "name": "UserAvro",
+   "namespace": "modelAvro.user",
    "fields": [
      {
        "name": "nome",
-       "type": ["string"],
+       "type": ["string"]
      },
      {
        "name": "email",
-       "type": ["string"],
+       "type": ["string"]
      },
      {
        "name": "age",
-       "type": ["string"],
+       "type": ["string"]
      }
    ]
 }

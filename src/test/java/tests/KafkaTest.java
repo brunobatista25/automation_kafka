@@ -2,6 +2,9 @@ package tests;
 
 import kafka.ConsumerUser;
 import kafka.ProducerUser;
+import kafkaAvro.ConsumerAvroUser;
+import kafkaAvro.ProducerAvroUser;
+import modelAvro.user.UserAvro;
 import org.junit.Test;
 import user.User;
 import utils.ReadYml;
@@ -33,5 +36,18 @@ public class KafkaTest {
     public void enviandoMensagemParaOTopicoComSucessoComAvro(){
         // Lendo arquivo yml
         Properties dados = ReadYml.lerArquivoYml("dados");
+
+        // setando valores pro objeto UserAvro
+        UserAvro avroMessage = UserAvro.newBuilder()
+                .setNome("bruno")
+                .setEmail("bruno@gmail.com")
+                .setAge("31")
+                .build();
+
+        // Enviando uma mensagem pro tópico "topic_user" com o valor "{"nome": "bruno","email": "bruno@gmail.com","age": "31" }"
+        ProducerAvroUser.sendMessageTopic("topic_user", avroMessage);
+
+        // Consumindo uma mensagem do tópico e validando se esta correto
+        assertThat(ConsumerAvroUser.getMessageTopic("topic_user"), is("{\"nome\": \"bruno\", \"email\": \"bruno@gmail.com\", \"age\": \"31\"}"));
     }
 }
