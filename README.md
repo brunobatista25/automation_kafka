@@ -29,13 +29,27 @@
     - [5.2.1 Instalando o plugin do lombok](#521-instalando-o-plugin-do-lombok)
     - [5.2.2 Instalando o projeto](#522-instalando-o-projeto)
     - [5.2.3 Estrutura do projeto](#523-estrutura-do-projeto)
-- [6. Em breve falo sobre avro e projetos com avro + kafka](#6-em-breve-falo-sobre-avro-e-projetos-com-avro--kafka)
-- [7. Referências](#7-referências)
+- [6. Vamos falar de Avro](#)
+  - [6.1 O que é avro?](#)
+  - [6.2 Porque usar avro com Kafka?](#)
+  - [6.3 Explicando pra que serve cada campo do avro](#)
+  - [6.4 Configuração do avro no projeto](#)
+    - [6.4.1 Instalando plugins apache avro IDL](#)
+    - [6.4.2 Instalando biblioteca e plugins do avro](#)
+    - [6.4.3 Gerando a classe baseada no avro](#)
+    - [6.4.4 adicionando valores no objeto avro](#)
+    - [6.4.5 Criando um producer com avro](#)
+    - [6.4.6 Criando um consumer com avro](#)
+    - [6.4.7 Primeiro teste com avro](#)
+- [7. Vamos falar de Confluent Control center](#)
+  - [7.1 Configurando o confluent control center](#)
+- [8. Referências](#7-referências)
 ---
 
 ### Boas vindas ao repositório do projeto de testes automatizados de kafka.
 
 - Esse repositório foi criado para auxiliar a fazer testes automatizados de streaming de eventos com kafka.
+- Muitos dos textos abaixo foram traduzidos das páginas oficiais.
 
 ### 1. O que é o Apache Kafka?
 
@@ -461,31 +475,109 @@ mvn clean test
 
 ![Rodando o teste](./imagens/sucesso.PNG)
 
-### 6. Em breve falo sobre avro e projetos com avro + kafka
+### 6.Vamos falar de Avro
 
-Em Breve...
+### 6.1 O que é avro
 
-Explicar o que é avro
+Avro é um sistema de serialização de dados de código aberto que ajuda na troca de dados entre sistemas, 
+linguagens de programação e estruturas de processamento. Avro ajuda a definir um formato binário para seus dados, 
+bem como mapeá-lo para a linguagem de programação de sua escolha.
 
-Passos da configuracao
-1adicionar o plugins apache avro IDL
-2adicionado a biblioteca do avro e o plugins do maven avro
-3configurei o plugins do avro para pegar o arquivo da pasta 
+### 6.2 Porque usar avro com Kafka?
+
+O Kafka funciona com qualquer formato de dados de sua preferência, mas adicionamos alguns recursos 
+especiais para Avro por causa de sua popularidade. No restante deste documento, examinarei alguns dos motivos.
+
+Avro tem um modelo de dados semelhante ao JSON, mas pode ser representado como JSON ou em um formato binário compacto. 
+Ele vem com uma linguagem de descrição de esquema muito sofisticada que descreve os dados.
+
+Achamos que Avro é a melhor escolha por vários motivos:
+
+1. Possui um mapeamento direto de e para JSON
+2. Possui um formato muito compacto. A maior parte do JSON, repetindo cada nome de campo com cada registro, é o que torna o JSON ineficiente para uso de alto volume.
+3. É muito rápido.
+4. Ele tem ótimas ligações para uma ampla variedade de linguagens de programação para que você possa gerar objetos Java que facilitam o trabalho com dados de eventos, mas não requer geração de código, portanto, as ferramentas podem ser escritas genericamente para qualquer fluxo de dados.
+5. Ele tem uma linguagem de esquema rica e extensível definida em JSON puro.
+6. Ele tem a melhor noção de compatibilidade para a evolução de seus dados ao longo do tempo.
+7. Embora possa parecer uma coisa pequena, lidar com esse tipo de metadados acaba sendo um dos aspectos mais críticos e menos apreciados para manter os dados de alta qualidade e facilmente utilizáveis em escala organizacional.
+
+Embora possa parecer uma coisa pequena, lidar com esse tipo de metadados acaba sendo um dos aspectos mais críticos e 
+menos apreciados para manter os dados de alta qualidade e facilmente utilizáveis em escala organizacional.
+
+Um dos recursos essenciais do Avro é a capacidade de definir um esquema para seus dados. Por exemplo, um evento que 
+representa a venda de um produto pode ter a seguinte aparência:
+
+´´´
+{
+"time": 1424849130111,
+"customer_id": 1234,
+"product_id": 5678,
+"quantity":3,
+"payment_type": "mastercard"
+}
+´´´
+
+Ele pode ter um esquema como este que define estes cinco campos:
+
+´´´
+{
+  "type": "record",
+  "doc":"This event records the sale of a product",
+  "name": "ProductSaleEvent",
+  "fields" : [
+    {"name":"time", "type":"long", "doc":"The time of the purchase"},
+    {"name":"customer_id", "type":"long", "doc":"The customer"},
+    {"name":"product_id", "type":"long", "doc":"The product"},
+    {"name":"quantity", "type":"int"},
+    {"name":"payment",
+     "type":{"type":"enum",
+             "name":"payment_types",
+             "symbols":["cash","mastercard","visa"]},
+    "doc":"The method of payment"}
+  ]
+}
+´´´
+
+### 6.3 Explicando pra que serve cada campo do avro
+Os arquivos avro que usam o nome de `"type": "record"` eles oferecem suporte aos seguintes atributos:
+
+1. `name:`, uma string JSON fornecendo o nome do registro (obrigatório).
+2. `namespace`, uma string JSON que qualifica o nome;
+3. `doc:`, uma string JSON que fornece documentação ao usuário deste esquema (opcional).
+4. `aliases:`, uma matriz JSON de strings, fornecendo nomes alternativos para este registro (opcional).
+5. `fields:` campos: uma matriz JSON, campos de listagem (obrigatório).
+
+Se quiser saber mais detalhes acesse essa página da documentação neste [link](https://avro.apache.org/docs/current/spec.html#schema_record) 
+
+
+### 6.4 Configuração do avro no projeto
+
+### 6.4.1 Instalando plugins apache avro IDL
+
+### 6.4.2 Instalando biblioteca e plugins do avro
+3configurei o plugins do avro para pegar o arquivo da pasta
 4e gerar o modelo na pasta tal
 5editei o arquivo avsc(explicar masi detalhado sobre o que cada campo faz)
-6executar e mostrar o que o avro gera o arquivo com a classe baseada no avro
-7inputar valor na classe mostrar como faz
-8Fazer um producer com avro
-9fazer um consumer com avro
-10fazer um teste com avro
 
+### 6.4.3 Gerando a classe baseada no avro
+6executar e mostrar o que o avro gera o arquivo com a classe baseada no avro
+
+### 6.4.4 adicionando valores no objeto avro
+7inputar valor na classe mostrar como faz
+
+### 6.4.5 Criando um producer com avro
+
+### 6.4.6 Criando um consumer com avro
+
+### 6.4.7 Primeiro teste com avro
+
+### 7 Vamos falar de Confluent Control center
 explicar o que e o Confluent Control Center
+
+## 7.1 Configurando o confluent control center
 Mostar com configura um Confluent Control Center(uma forma visual de ver como ta a fila, msg etc)
 
-
-
-
-### 7. Referências
+### 8. Referências
 
 ### Kafka
 
