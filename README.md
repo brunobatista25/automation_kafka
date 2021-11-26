@@ -675,6 +675,13 @@ OBS: Existe mais coisas no control center apenas coloquei esses que são mais us
 Nesse meu projeto eu ja configurei utilizando o docker-compose por ser mais simples e facil pra configurar mas se preferir
 pode configurar do jeito que você quiser, seguindo esses passo aqui [configuração control center](https://docs.confluent.io/platform/current/control-center/installation/configure-control-center.html)
 
+Configuração do schema resistry
+
+![Schema Registry](./imagens/schema.PNG)
+
+Configuração do confluent control center
+
+![Control center](./imagens/controlcenter.PNG)
 ### 8. Referências
 
 ### Kafka
