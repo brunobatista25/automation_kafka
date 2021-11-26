@@ -29,13 +29,26 @@
     - [5.2.1 Instalando o plugin do lombok](#521-instalando-o-plugin-do-lombok)
     - [5.2.2 Instalando o projeto](#522-instalando-o-projeto)
     - [5.2.3 Estrutura do projeto](#523-estrutura-do-projeto)
-- [6. Em breve falo sobre avro e projetos com avro + kafka](#6-em-breve-falo-sobre-avro-e-projetos-com-avro--kafka)
-- [7. Referências](#7-referências)
+- [6. Vamos falar de Avro](#6vamos-falar-de-avro)
+  - [6.1 O que é avro?](#61-o-que-é-avro)
+  - [6.2 Porque usar avro com Kafka?](#62-porque-usar-avro-com-kafka)
+  - [6.3 Explicando pra que serve cada campo do avro](#63-explicando-pra-que-serve-cada-campo-do-avro)
+  - [6.4 Configuração do avro no projeto](#64-configuração-do-avro-no-projeto)
+    - [6.4.1 Instalando plugins apache avro IDL](#641-instalando-plugins-apache-avro-idl)
+    - [6.4.2 Instalando biblioteca e plugins do avro](#642-instalando-biblioteca-e-plugins-do-avro)
+    - [6.4.3 Gerando a classe baseada no avro](#643-gerando-a-classe-baseada-no-avro)
+    - [6.4.4 adicionando valores no objeto avro](#644-adicionando-valores-no-objeto-avro)
+    - [6.4.5 Criando um producer com avro](#645-criando-um-producer-com-avro)
+    - [6.4.6 Criando um consumer com avro](#646-criando-um-consumer-com-avro)
+- [7. Vamos falar de Confluent Control center](#7-vamos-falar-de-confluent-control-center)
+  - [7.1 Configurando o confluent control center](#71-configurando-o-confluent-control-center)
+- [8. Referências](#7-referências)
 ---
 
-### Boas vindas ao repositório do projeto de testes automatizados de kafka.
+### Boas-vindas ao repositório do projeto de testes automatizados de kafka.
 
 - Esse repositório foi criado para auxiliar a fazer testes automatizados de streaming de eventos com kafka.
+- Muitos dos textos abaixo foram traduzidos das páginas oficiais.
 
 ### 1. O que é o Apache Kafka?
 
@@ -77,28 +90,28 @@ ponta a ponta com uma única solução testada em batalha:
   2) Para armazenar streams de eventos de forma durável e confiável pelo tempo que você quiser.
   3) Para processar fluxos de eventos conforme eles ocorrem ou retrospectivamente.
 
-  E toda essa funcionalidade é fornecida de maneira distribuída, altamente escalável, elástica, tolerante a falhas e 
+  E toda essa funcionalidade é fornecida de maneira distribuída, altamente escalável, elástica, tolerante a falha e 
   segura. O Kafka pode ser implantado em hardware máquinas virtuais e contêineres, e no local, bem como na nuvem. 
-  Você pode escolher entre o autogerenciamento de seus ambientes Kafka e o uso de serviços totalmente gerenciados 
+  Você pode escolher entre o auto gerenciamento de seus ambientes Kafka e o uso de serviços totalmente gerenciados 
   oferecidos por diversos fornecedores.
 
 ### 1.4 Como funciona o kafka 
 
-Kafka é um sistema distribuído que consiste em servidores e clientes que se comunicam por meio de um protocolo de rede 
-TCP de alto desempenho . Ele pode ser implantado em hardware bare-metal, máquinas virtuais e contêineres no local, 
+Kafka é um sistema distribuído que consiste em servidores e clientes que se comunicam por um protocolo de rede 
+TCP de alto desempenho. Ele pode ser implantado em hardware bare-metal, máquinas virtuais e contêineres no local, 
 bem como em ambientes de nuvem.
 
 **Servidores:** O Kafka é executado como um cluster de um ou mais servidores que podem abranger vários datacenters ou 
 regiões de nuvem. Alguns desses servidores formam a camada de armazenamento, chamados de corretores. Outros servidores 
 executam o Kafka Connect para importar e exportar dados continuamente como fluxos de eventos para integrar o Kafka com 
 seus sistemas existentes, como bancos de dados relacionais, bem como outros clusters Kafka. Para permitir que você 
-implemente casos de uso de missão crítica, um cluster Kafka é altamente escalonável e tolerante a falhas: se algum de 
+implemente casos de uso de missão crítica, um cluster Kafka é altamente escalonável e tolerante a falha: se algum de 
 seus servidores falhar, os outros servidores assumirão seu trabalho para garantir operações contínuas sem qualquer perda de dados.
 
 **Clientes:** Eles permitem que você escreva aplicativos e microsserviços distribuídos que leem, gravam e processam 
 fluxos de eventos em paralelo, em escala e de maneira tolerante a falhas, mesmo no caso de problemas de rede ou 
 de máquina. O Kafka vem com alguns desses clientes incluídos, que são aumentados por dezenas de clientes fornecidos pela comunidade 
-Kafka: os clientes estão disponíveis para Java e Scala, incluindo a biblioteca Kafka Streams de nível superior , 
+Kafka: os clientes estão disponíveis para Java e Scala, incluindo a biblioteca Kafka Streams de nível superior, 
 para Go, Python, C / C ++ e muitas outras programações linguagens, bem como APIs REST.
 
 ### 2. O que é o Zookeper?
@@ -107,7 +120,7 @@ ZooKeeper é um serviço centralizado para manter informações de configuraçã
 distribuída e fornecer serviços de grupo. Todos esses tipos de serviços são usados de uma forma ou de outra por 
 aplicativos distribuídos. Cada vez que eles são implementados, há muito trabalho para consertar os bugs e as condições 
 de corrida que são inevitáveis. Devido à dificuldade de implementar esses tipos de serviços, os aplicativos geralmente 
-os reduzem, o que os torna frágeis na presença de mudanças e difíceis de gerenciar. Mesmo quando feito corretamente, 
+os reduzem, o que a torna frágil na presença de mudanças e difíceis de gerenciar. Mesmo quando feito corretamente, 
 diferentes implementações desses serviços levam à complexidade do gerenciamento quando os aplicativos são implantados.
 
 Saiba mais sobre o ZooKeeper no [ZooKeeper Wiki](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index) .
@@ -124,7 +137,7 @@ uma definição de configuração por tópico, após o qual os eventos antigos s
 efetivamente constante em relação ao tamanho dos dados, portanto, armazenar dados por um longo tempo é perfeitamente 
 adequado.
 
-Os tópicos são particionados , o que significa que um tópico é espalhado por vários "depósitos" localizados em 
+Os tópicos são particionados, o que significa que um tópico é espalhado por vários "depósitos" localizados em 
 diferentes corretores Kafka. Esse posicionamento distribuído de seus dados é muito importante para a escalabilidade, 
 pois permite que os aplicativos clientes leiam e gravem os dados de / para vários corretores ao mesmo tempo. 
 Quando um novo evento é publicado em um tópico, ele é, na verdade, anexado a uma das partições do tópico. 
@@ -461,11 +474,215 @@ mvn clean test
 
 ![Rodando o teste](./imagens/sucesso.PNG)
 
-### 6. Em breve falo sobre avro e projetos com avro + kafka
+### 6.Vamos falar de Avro
 
-Em Breve...
+### 6.1 O que é avro
 
-### 7. Referências
+Avro é um sistema de serialização de dados de código aberto que ajuda na troca de dados entre sistemas, 
+linguagens de programação e estruturas de processamento. Avro ajuda a definir um formato binário para seus dados, 
+bem como mapeá-lo para a linguagem de programação de sua escolha.
+
+### 6.2 Porque usar avro com Kafka?
+
+O Kafka funciona com qualquer formato de dados de sua preferência, mas adicionamos alguns recursos 
+especiais para Avro por causa de sua popularidade. No restante deste documento, examinarei alguns dos motivos.
+
+Avro tem um modelo de dados semelhante ao JSON, mas pode ser representado como JSON ou em um formato binário compacto. 
+Ele vem com uma linguagem de descrição de esquema muito sofisticada que descreve os dados.
+
+Achamos que Avro é a melhor escolha por vários motivos:
+
+1. Possui um mapeamento direto de e para JSON
+2. Possui um formato muito compacto. A maior parte do JSON, repetindo cada nome de campo com cada registro, é o que torna o JSON ineficiente para uso de alto volume.
+3. É muito rápido.
+4. Ele tem ótimas ligações para uma ampla variedade de linguagens de programação para que você possa gerar objetos Java que facilitam o trabalho com dados de eventos, mas não requer geração de código, portanto, as ferramentas podem ser escritas genericamente para qualquer fluxo de dados.
+5. Ele tem uma linguagem de esquema rica e extensível definida em JSON puro.
+6. Ele tem a melhor noção de compatibilidade para a evolução de seus dados ao longo do tempo.
+7. Embora possa parecer uma coisa pequena, lidar com esse tipo de metadados acaba sendo um dos aspectos mais críticos e menos apreciados para manter os dados de alta qualidade e facilmente utilizáveis em escala organizacional.
+
+Embora possa parecer uma coisa pequena, lidar com esse tipo de metadados acaba sendo um dos aspectos mais críticos e 
+menos apreciados para manter os dados de alta qualidade e facilmente utilizáveis em escala organizacional.
+
+Um dos recursos essenciais do Avro é a capacidade de definir um esquema para seus dados. Por exemplo, um evento que 
+representa a venda de um produto pode ter a seguinte aparência:
+
+```
+{
+"time": 1424849130111,
+"customer_id": 1234,
+"product_id": 5678,
+"quantity":3,
+"payment_type": "mastercard"
+}
+```
+
+Ele pode ter um esquema como este que define estes cinco campos:
+
+```
+{
+  "type": "record",
+  "doc":"This event records the sale of a product",
+  "name": "ProductSaleEvent",
+  "fields" : [
+    {"name":"time", "type":"long", "doc":"The time of the purchase"},
+    {"name":"customer_id", "type":"long", "doc":"The customer"},
+    {"name":"product_id", "type":"long", "doc":"The product"},
+    {"name":"quantity", "type":"int"},
+    {"name":"payment",
+     "type":{"type":"enum",
+             "name":"payment_types",
+             "symbols":["cash","mastercard","visa"]},
+    "doc":"The method of payment"}
+  ]
+}
+```
+
+### 6.3 Explicando pra que serve cada campo do avro
+Os arquivos avro que usam o nome de `"type": "record"` eles oferecem suporte aos seguintes atributos:
+
+1. `name:`, uma string JSON fornecendo o nome do registro (obrigatório).
+2. `namespace`, uma string JSON que qualifica o nome;
+3. `doc:`, uma string JSON que fornece documentação ao usuário deste esquema (opcional).
+4. `aliases:`, uma matriz JSON de strings, fornecendo nomes alternativos para este registro (opcional).
+5. `fields:` campos: uma matriz JSON, campos de listagem (obrigatório).
+
+Se quiser saber mais detalhes acesse essa página da documentação neste [link](https://avro.apache.org/docs/current/spec.html#schema_record) 
+
+### 6.4 Configuração do avro no projeto
+
+### 6.4.1 Instalando plugins apache avro IDL
+
+Primeiro passo vamos instalar o plugins o avro.
+
+Basta acessar no intellij o seguinte caminho:
+
+File > settings > plugins e buscar por apache avro idl schema support e instalar ele
+
+### 6.4.2 Instalando biblioteca e plugins do avro
+
+dentro do pom basta adicionar as seguintes bibliotecas
+
+```
+        <!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer -->
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>${avro.serializer.version}</version>
+        </dependency>
+```
+
+E também adicionar o plugins do avro + maven
+
+```
+  <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>1.8.2</version>
+                <executions>
+                    <execution>
+                        <id>schemas</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/test/resources/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/test/java/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+```
+
+Pra deixar avisado a tag `<sourceDirectory>` você vai dizer onde esta o caminho dos seus arquivos avro
+
+Pra deixar avisado a tag `<outputDirectory>` você vai dizer onde plugins irá gerar as classes baseadas no schema avro
+
+### 6.4.3 Gerando a classe baseada no avro
+
+Para gerar a classe basta executar o comando `mvn clean install` e ele irá instalar como no exemplo abaixo
+
+![Gerando Avro](./imagens/gerandoavro.PNG)
+
+No meu caso ele criou um package com o nome modelAvroUser e dentro dele ele gerou uma classe baseada no avro como no exemplo abaixo
+
+![Classe Avro](./imagens/classeavro.PNG)
+
+OBS: Não se preocupe em editar nada dessa classe o plugins do avro já faz isso pra gente
+
+### 6.4.4 adicionando valores no objeto avro
+
+Depois de geramos a classe com os parametros do avro precisamos saber como enviar valores pro objeto da classe, 
+então sempre que precisar adicionar valor pode se usar o builder como no exemplo abaixo:
+
+![Setando valores](./imagens/setandovalores.PNG)
+
+### 6.4.5 Criando um producer com avro
+
+Aqui estou criando um producer onde é mesmo processo de criar um producer normal a unica diferença e que quando chamamos 
+o consumer ao invés de ser o padrão `Producer<String, String>` é passado o objeto da classe assim `Producer<String, UserAvro>`
+
+![Producer Avro](./imagens/produceravro.PNG)
+
+### 6.4.6 Criando um consumer com avro
+
+Aqui estou criando um consumer onde é mesmo processo de criar um producer normal a unica diferença e que quando chamamos
+o consumer ao invés de ser o padrão `Consumer<String, String>` é passado o objeto da classe assim `Consumer<String, UserAvro>`
+
+![Consumer Avro](./imagens/consumeravro.PNG)
+
+Existem tambem uma diferença na hora de configurar as configs do projeto
+
+![Avro config](./imagens/avroconfig.PNG)
+
+Quando vamos serializar ou deserializar um valor para serializar passamos o `KafkaAvroSerializer.class.getName()`
+e para deserializar passamos o `KafkaAvroDeserializer.class.getName()`
+
+### 7 Vamos falar de Confluent Control center
+
+O Confluent Control center e uma parte mais visual de você ver com esta o cluster, com está as mensagens como estão os 
+tópicos, como esta setado o schema etc.. 
+
+Caso queria saber mais sobre esse pode acessar esse [link](https://docs.confluent.io/platform/current/control-center/index.html)
+
+Mostando como é um control center no ar no exemplo abaixo:
+
+Exemplo de visualização de overview do kafka
+![Confluent 1](./imagens/confluent1.PNG)
+
+Exemplo de visualização de tópicos
+![Confluent 2](./imagens/confluent2.PNG)
+
+Exemplo de visualização de schema
+![Confluent 3](./imagens/confluent3.PNG)
+
+Exemplo de visualização de mensagens
+![Confluent 4](./imagens/confluent4.PNG)
+
+OBS: Existe mais coisas no control center apenas coloquei esses que são mais usados
+
+## 7.1 Configurando o confluent control center
+
+Nesse meu projeto eu ja configurei utilizando o docker-compose por ser mais simples e facil pra configurar mas se preferir
+pode configurar do jeito que você quiser, seguindo esses passo aqui [configuração control center](https://docs.confluent.io/platform/current/control-center/installation/configure-control-center.html)
+
+Configuração do schema resistry
+
+![Schema Registry](./imagens/schema.PNG)
+
+Configuração do confluent control center
+
+![Control center](./imagens/controlcenter.PNG)
+### 8. Referências
 
 ### Kafka
 
@@ -498,3 +715,11 @@ https://www.java.com/pt-BR/
 ### Maven
 
 https://maven.apache.org/
+
+### Avro
+
+https://avro.apache.org/docs/1.2.0/
+
+### Confluent control center
+
+https://docs.confluent.io/platform/current/control-center/overview.html
