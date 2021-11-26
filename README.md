@@ -29,19 +29,19 @@
     - [5.2.1 Instalando o plugin do lombok](#521-instalando-o-plugin-do-lombok)
     - [5.2.2 Instalando o projeto](#522-instalando-o-projeto)
     - [5.2.3 Estrutura do projeto](#523-estrutura-do-projeto)
-- [6. Vamos falar de Avro](#)
-  - [6.1 O que é avro?](#)
-  - [6.2 Porque usar avro com Kafka?](#)
-  - [6.3 Explicando pra que serve cada campo do avro](#)
-  - [6.4 Configuração do avro no projeto](#)
-    - [6.4.1 Instalando plugins apache avro IDL](#)
-    - [6.4.2 Instalando biblioteca e plugins do avro](#)
-    - [6.4.3 Gerando a classe baseada no avro](#)
-    - [6.4.4 adicionando valores no objeto avro](#)
-    - [6.4.5 Criando um producer com avro](#)
-    - [6.4.6 Criando um consumer com avro](#)
-- [7. Vamos falar de Confluent Control center](#)
-  - [7.1 Configurando o confluent control center](#)
+- [6. Vamos falar de Avro](#6vamos-falar-de-avro)
+  - [6.1 O que é avro?](#61-o-que-é-avro)
+  - [6.2 Porque usar avro com Kafka?](#62-porque-usar-avro-com-kafka)
+  - [6.3 Explicando pra que serve cada campo do avro](#63-explicando-pra-que-serve-cada-campo-do-avro)
+  - [6.4 Configuração do avro no projeto](#64-configuração-do-avro-no-projeto)
+    - [6.4.1 Instalando plugins apache avro IDL](#641-instalando-plugins-apache-avro-idl)
+    - [6.4.2 Instalando biblioteca e plugins do avro](#642-instalando-biblioteca-e-plugins-do-avro)
+    - [6.4.3 Gerando a classe baseada no avro](#643-gerando-a-classe-baseada-no-avro)
+    - [6.4.4 adicionando valores no objeto avro](#644-adicionando-valores-no-objeto-avro)
+    - [6.4.5 Criando um producer com avro](#645-criando-um-producer-com-avro)
+    - [6.4.6 Criando um consumer com avro](#646-criando-um-consumer-com-avro)
+- [7. Vamos falar de Confluent Control center](#7-vamos-falar-de-confluent-control-center)
+  - [7.1 Configurando o confluent control center](#71-configurando-o-confluent-control-center)
 - [8. Referências](#7-referências)
 ---
 
@@ -506,7 +506,7 @@ menos apreciados para manter os dados de alta qualidade e facilmente utilizávei
 Um dos recursos essenciais do Avro é a capacidade de definir um esquema para seus dados. Por exemplo, um evento que 
 representa a venda de um produto pode ter a seguinte aparência:
 
-´´´
+```
 {
 "time": 1424849130111,
 "customer_id": 1234,
@@ -514,11 +514,11 @@ representa a venda de um produto pode ter a seguinte aparência:
 "quantity":3,
 "payment_type": "mastercard"
 }
-´´´
+```
 
 Ele pode ter um esquema como este que define estes cinco campos:
 
-´´´
+```
 {
   "type": "record",
   "doc":"This event records the sale of a product",
@@ -535,7 +535,7 @@ Ele pode ter um esquema como este que define estes cinco campos:
     "doc":"The method of payment"}
   ]
 }
-´´´
+```
 
 ### 6.3 Explicando pra que serve cada campo do avro
 Os arquivos avro que usam o nome de `"type": "record"` eles oferecem suporte aos seguintes atributos:
@@ -624,7 +624,7 @@ OBS: Não se preocupe em editar nada dessa classe o plugins do avro já faz isso
 Depois de geramos a classe com os parametros do avro precisamos saber como enviar valores pro objeto da classe, 
 então sempre que precisar adicionar valor pode se usar o builder como no exemplo abaixo:
 
-![Setando valores](./imagens/setandoavro.PNG)
+![Setando valores](./imagens/setandovalores.PNG)
 
 ### 6.4.5 Criando um producer com avro
 
