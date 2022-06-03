@@ -1,5 +1,7 @@
 package tests;
 
+import brasileirao.Brasileirao;
+import com.google.gson.Gson;
 import kafka.ConsumerUser;
 import kafka.ProducerUser;
 import kafkaAvro.ConsumerAvroUser;
@@ -16,6 +18,24 @@ import static org.hamcrest.Matchers.is;
 
 public class KafkaTest {
     User user;
+    Brasileirao brasileirao;
+
+    @Test
+    public void enviandoMensagemParaOTopicoBrasileiraoComSucessos(){
+        // Adicionando valores ao objeto brasileirao
+        Brasileirao brasileiro = brasileirao.builder()
+                .nomeDoTimeDaCasa("Fluminense")
+                .nomeDoTimeDeFora("Flamengo")
+                .resultado("2 x 0")
+                .timeVitorioso("Fluminense")
+                .build();
+
+        // Esse producer esta aqui apenas por motivos de explicacao onde eu envio msg para o topico
+        // Enviando uma mensagem pro tópico "brasileirao" com o valor "{"nomeDoTimeDaCasa":Fluminense,"nomeDoTimeDeFora":Flamengo,"resultado":2 x 0,"timeVitorioso":Fluminense}"
+        ProducerUser.sendMessageTopic("brasileirao", brasileiro);
+
+        assertThat(ConsumerUser.getMessageTopic("brasileirao"), is("{\"nomeDoTimeDaCasa\":Fluminense,\"nomeDoTimeDeFora\":Flamengo,\"resultado\":2 x 0,\"timeVitorioso\":Fluminense}"));
+    }
 
     @Test
     public void enviandoMensagemParaOTopicoComSucesso(){
